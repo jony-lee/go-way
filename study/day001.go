@@ -3,5 +3,5 @@ package study
 import "fmt"
 
 func Test() {
-	fmt.Println("just for test!")
+	fmt.Println("<study> just for test!")
 }
