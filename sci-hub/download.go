@@ -2,22 +2,53 @@ package sci_hub
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
+	"regexp"
 	"strings"
 )
 
-func analysisDoi(key string) (doi string, err error) {
+func AnalysisDoi(key string) (doi string, err error) {
 	a := strings.Split(doi, ".")[0]
 	b := len(strings.Split(doi, "/"))
+	//判断输入，若是doi则直接返回，若是字符串则进一步检索doi
 	if a == "10" && b == 2 {
 		return
 	}
+	//通过百度学术抓取检索第一篇文章的paperId
 	BaseURL := "http://xueshu.baidu.com"
 	url := BaseURL + "/s?wd=" + key
 	resp, err := http.Get(url)
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(resp.Body)
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println(err)
+	}
+	html := string(body)
+	reg := regexp.MustCompile(`"\w{32}"`)
+	if paperId := reg.FindAllString(html, -1); paperId != nil {
+		//通过paperId获取对应文章页面并抓取其中的doi
+		paperUrl := fmt.Sprintf("http://xueshu.baidu.com/usercenter/paper/show?paperid=%s&site=xueshu_se", paperId[0])
+		resp, err = http.Get(paperUrl)
+		if err != nil {
+			fmt.Println(err)
+		}
+		//doc, err := goquery.NewDocumentFromReader(resp.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
+		//doc.Find(".sidebar-reviews article .content-block").Each(func(i int, s *goquery.Selection) {
+		//	// For each item found, get the band and title
+		//	band := s.Find("a").Text()
+		//	title := s.Find("i").Text()
+		if doiList := reg.FindAllString(html, -1); doiList != nil {
+			doi = doiList[0]
+			return
+		}
+	}
 	return
 }
