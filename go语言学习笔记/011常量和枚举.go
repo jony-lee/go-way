@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 //const(
 //	x = iota
 //	y
@@ -16,14 +18,15 @@ package main
 //	a,b
 //	c,d
 //)
-//const(
-//	a = iota
-//	b
-//	c = 100
-//	d
-//	e = iota
-//	f
-//)
+const(
+	r = 789
+	a = iota
+	b
+	c = 100
+	d
+	e = iota
+	f
+)
 //const(
 //	a = iota
 //	b float32 = iota
@@ -42,3 +45,7 @@ package main
 
 //不赋值其实就是 默认复制上一行表达式
 //iota是变化的，也因此就可以通过iota来生成一定规律常量
+
+func main() {
+	fmt.Println(a,b,c,d,e,f,s)
+}
