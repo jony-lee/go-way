@@ -1,4 +1,4 @@
-package main
+package 第四章_函数
 
 import (
 	"log"
@@ -16,7 +16,7 @@ type serverOption struct {
 
 func newOption() *serverOption {
 	return &serverOption{
-		address:  "0.0.0.0",
+		address: "0.0.0.0",
 		port:    8080,
 		path:    "/var/test",
 		timeout: time.Second * 5,
@@ -24,11 +24,10 @@ func newOption() *serverOption {
 	}
 }
 
-func server(option *serverOption){}
+func server(option *serverOption) {}
 
 func main() {
-	opt:= newOption()
+	opt := newOption()
 	opt.port = 8085
 	server(opt)
 }
-

@@ -1,20 +1,20 @@
-package main
+package 第四章_函数
 
 import "fmt"
 
-func testClosure(x int) func(in int){
+func testClosure(x int) func(in int) {
 	fmt.Println(&x)
-	a :=56349
-	return func(in int){
-		fmt.Println(&x,x)
-		if in == 6{
+	a := 56349
+	return func(in int) {
+		fmt.Println(&x, x)
+		if in == 6 {
 			fmt.Println(a)
 		}
 	}
 }
 
-func main(){
-	f:=testClosure(0x100)
+func main() {
+	f := testClosure(0x100)
 	f(6)
 }
 

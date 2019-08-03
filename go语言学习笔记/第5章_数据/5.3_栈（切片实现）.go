@@ -1,8 +1,13 @@
 package main
 
-func sliceStack(){
-	stack := make([]int, 0, 5)//初始化栈
-	push := func(x int) error {//栈push操作
+import (
+	"errors"
+	"fmt"
+)
+
+func sliceStack() {
+	stack := make([]int, 0, 5)  //初始化栈
+	push := func(x int) error { //栈push操作
 		n := len(stack)
 		if n == cap(stack) {
 			return errors.New("Stack is full")
@@ -12,7 +17,7 @@ func sliceStack(){
 		return nil
 	}
 
-	pop := func() (int, error) {//栈pop操作
+	pop := func() (int, error) { //栈pop操作
 		n := len(stack)
 		if n == 0 {
 			return 0, errors.New("Stack is empty")

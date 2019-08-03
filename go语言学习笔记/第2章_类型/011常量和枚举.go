@@ -18,7 +18,7 @@ import "fmt"
 //	a,b
 //	c,d
 //)
-const(
+const (
 	r = 789
 	a = iota
 	b
@@ -27,6 +27,7 @@ const(
 	e = iota
 	f
 )
+
 //const(
 //	a = iota
 //	b float32 = iota
@@ -47,5 +48,5 @@ const(
 //iota是变化的，也因此就可以通过iota来生成一定规律常量
 
 func main() {
-	fmt.Println(a,b,c,d,e,f,s)
+	fmt.Println(a, b, c, d, e, f)
 }
