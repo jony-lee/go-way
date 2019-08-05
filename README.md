@@ -12,7 +12,8 @@ TODO 目录结构混乱，需要整理
 |[1.两数之和](/leetcode/1.两数之和/main.go)|
 |[2.两数相加](/leetcode/2.两数相加/main.go)|
 |[3.无重复字符的最长子串](/leetcode/3.无重复字符的最长子串/main.go)|
-
+|[89.格雷编码](/leetcode/89.格雷编码/main.go)|
+|[717.1比特与2比特字符](/leetcode/717.1比特与2比特字符/main.go)|
 
 ## 其他
 
