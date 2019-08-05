@@ -9,6 +9,6 @@ TODO 目录结构混乱，需要整理
 ## leetcode
 leetcode算法题目的go实现，
 
-[1.两数之和](jony-lee/go-way/leetcode/1.两数之和/main.go)
+[1.两数之和](/leetcode/1.两数之和/main.go)
 
 go相关代码、技术、文章...
