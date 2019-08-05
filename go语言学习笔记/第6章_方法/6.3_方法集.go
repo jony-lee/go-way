@@ -17,21 +17,23 @@ import (
 //
 
 //TODO 需要着重理解的知识点
+//https://studygolang.com/topics/227
+//方法集的概念是对接口来说的
+//实际上，一个值类型可以调用（t *T）这样的方法，因为调用时会变为：&a
+
 type S struct{}
 
 type T struct {
 	S //匿名嵌入字段
-	//*S	//如果是*S的话，那么T方法集应包含receiver T + S + *S
 }
 
-func (S) sVal()  {}
-func (*S) sPtr() {}
-func (T) tVal()  {}
-func (*T) tPtr() {}
+func (S) SVal()  { fmt.Println("I am S.") }
+func (*S) SPtr() { fmt.Println("I am *S.") }
+func (T) TVal()  { fmt.Println("I am T.") }
+func (*T) TPtr() { fmt.Println("I am *T.") }
 
 func methodSet(a interface{}) {
 	t := reflect.TypeOf(a)
-
 	for i, n := 0, t.NumMethod(); i < n; i++ {
 		m := t.Method(i)
 		fmt.Println(m.Name, m.Type)
@@ -39,7 +41,11 @@ func methodSet(a interface{}) {
 }
 
 func main() {
-	var t T
+	var t *T
+	t.SPtr()
+	t.SVal()
+	t.TPtr()
+	t.TVal()
 	methodSet(t) //显示T方法集
 	fmt.Println("-------------")
 	methodSet(&t) //显示*T方法集

@@ -38,6 +38,7 @@ import (
 最终，根节点的Next节点返回即可
 时间效率O()
 空间效率O()
+总结：主要是对单链表的一次应用，题目本身不难，按部就班地实现，考虑清楚边界条件。
 */
 /**
  * Definition for singly-linked list.

@@ -31,6 +31,7 @@ import "fmt"
 
 时间效率O(n)
 空间效率O(1)
+总结：查找满足特定运算的两个数的位置，首先去思考hash算法能不能实现想要的结果，如果能，一般考虑通过字典怎么实现。
 */
 func twoSum(nums []int, target int) []int {
 	m := make(map[int]int)
