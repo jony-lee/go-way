@@ -1,8 +1,9 @@
-package paper
+package main
 
 import (
 	"bytes"
 	"encoding/base64"
+	"encoding/json"
 	"io/ioutil"
 	"log"
 	"net/smtp"
@@ -17,10 +18,10 @@ type Mail interface {
 }
 
 type SendMail struct {
-	user     string
-	password string
-	host     string
-	port     string
+	User     string
+	Password string
+	Host     string
+	Port     string
 	auth     smtp.Auth
 }
 
@@ -41,27 +42,18 @@ type Message struct {
 	attachment  Attachment
 }
 
-func main() {
-	var mail Mail
-	mail = &SendMail{user: "chunyunzeng@hotmail.com", password: "password", host: "smtp.mxhichina.com", port: "25"}
-	message := Message{from: "chunyunzeng@hotmail.com",
-		to:          []string{"850808158@qq.com"},
-		cc:          []string{},
-		bcc:         []string{},
-		subject:     "HELLO WORLD",
-		body:        "",
-		contentType: "text/plain;charset=utf-8",
-		attachment: Attachment{
-			name:        "test.jpg",
-			contentType: "image/jpg",
-			withFile:    true,
-		},
+func loadJson(filename string, v interface{}) {
+	data, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return
 	}
-	mail.Send(message)
+	err = json.Unmarshal(data, v)
+	if err != nil {
+		return
+	}
 }
-
 func (mail *SendMail) Auth() {
-	mail.auth = smtp.PlainAuth("", mail.user, mail.password, mail.host)
+	mail.auth = smtp.PlainAuth("", mail.User, mail.Password, mail.Host)
 }
 
 func (mail SendMail) Send(message Message) error {
@@ -99,7 +91,10 @@ func (mail SendMail) Send(message Message) error {
 	}
 
 	buffer.WriteString("\r\n--" + boundary + "--")
-	smtp.SendMail(mail.host+":"+mail.port, mail.auth, message.from, message.to, buffer.Bytes())
+	err := smtp.SendMail(mail.Host+":"+mail.Port, mail.auth, message.from, message.to, buffer.Bytes())
+	if err != nil {
+		panic(err)
+	}
 	return nil
 }
 
@@ -128,4 +123,28 @@ func (mail SendMail) writeFile(buffer *bytes.Buffer, fileName string) {
 			buffer.WriteString("\r\n")
 		}
 	}
+}
+
+func main() {
+	mail := SendMail{}
+	loadJson("src/github.com/jony-lee/go-way/sci-hub/paper/config.json", &mail)
+	//mail = &SendMail{user: "chunyunzeng@hotmail.com", password: "password", host: "smtp.mxhichina.com", port: "25"}
+	message := Message{from: "jonylee_cn@163.com",
+		to:          []string{"1528315273@qq.com"},
+		cc:          []string{},
+		bcc:         []string{},
+		subject:     "HELLO WORLD",
+		body:        "",
+		contentType: "text/plain;charset=utf-8",
+		attachment: Attachment{
+			name:        "./pdf/1.pdf",
+			contentType: "Content-Disposition",
+			withFile:    true,
+		},
+	}
+	//TODO 邮箱登陆认证出问题了
+	if err := mail.Send(message); err != nil {
+		panic(err)
+	}
+
 }
