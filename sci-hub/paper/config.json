@@ -1,0 +1,6 @@
+{
+  "user": "jonylee_cn@163.com",
+  "password": "asd123456",
+  "host": "ssl://smtp.163.com",
+  "port": "465"
+}

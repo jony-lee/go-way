@@ -16,7 +16,6 @@ func paperDownloadHandler(w http.ResponseWriter, r *http.Request) {
 	doi := r.PostFormValue("doi")
 	mail := r.PostFormValue("mail")
 	paperDownload(doi, mail)
-	fmt.Printf("已收到请求【doi: %s ,mail: %s】\n", doi, mail)
 	resp := fmt.Sprintf("已收到请求【doi: %s ,mail: %s】\n", doi, mail)
 	_, _ = io.WriteString(w, resp)
 	return
