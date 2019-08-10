@@ -15,7 +15,7 @@ type slice struct {
 
 //引用类型需使用make函数或显示初始化语句
 func sliceInit() {
-	s1 := make([]int, 3, 5)    //指定len、cap，底层数组初始化为0
+	s1 := make([]int, 0, 0)    //指定len、cap，底层数组初始化为0
 	s2 := make([]int, 3)       //省略cap，和len相等
 	s3 := []int{10, 20, 5: 30} //按初始化元素分配底层数组，并设置len、cap
 	fmt.Println(s1, len(s1), cap(s1))
@@ -75,7 +75,7 @@ func arrayJagged() {
 	}
 }
 func main() {
-	//sliceInit()
+	sliceInit()
 	//sliceDefine()
 	arrayJagged()
 }
